@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drawing a Pentagon with D3.js</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    svg {
+      background-color: lightgray;
+    }
+    .pentagon {
+      fill: orange;
+      stroke: darkorange;
+    }
+  </style>
+</head>
+<body>
+  <svg width="200" height="200"></svg>
+
+  <script>
+    const svg = d3.select("svg");
+
+    const centerX = 100;
+    const centerY = 100;
+    const radius = 80;
+
+    const pentagonData = d3.range(0, 5).map((i) => {
+      const angle = (i / 5) * Math.PI * 2;
+      return [
+        centerX + radius * Math.sin(angle),
+        centerY - radius * Math.cos(angle)
+      ];
+    });
+
+    const lineFunction = d3.line()
+      .x((d) => d[0])
+      .y((d) => d[1])
+      .curve(d3.curveLinearClosed);
+
+    svg.append("path")
+      .attr("d", lineFunction(pentagonData))
+      .attr("class", "pentagon");
+
+  </script>
+</body>
+</html>
